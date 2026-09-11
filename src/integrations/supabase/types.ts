@@ -14,7 +14,130 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      markets: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          name: string
+          sort_order: number
+          symbol: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          name: string
+          sort_order?: number
+          symbol: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          name?: string
+          sort_order?: number
+          symbol?: string
+        }
+        Relationships: []
+      }
+      predictions: {
+        Row: {
+          amount: number
+          created_at: string
+          direction: string
+          id: string
+          payout: number
+          round_number: number
+          settled_at: string | null
+          status: string
+          symbol: string
+          tx_hash: string | null
+          wallet_address: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          direction: string
+          id?: string
+          payout?: number
+          round_number: number
+          settled_at?: string | null
+          status?: string
+          symbol: string
+          tx_hash?: string | null
+          wallet_address: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          direction?: string
+          id?: string
+          payout?: number
+          round_number?: number
+          settled_at?: string | null
+          status?: string
+          symbol?: string
+          tx_hash?: string | null
+          wallet_address?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "predictions_symbol_fkey"
+            columns: ["symbol"]
+            isOneToOne: false
+            referencedRelation: "markets"
+            referencedColumns: ["symbol"]
+          },
+        ]
+      }
+      rounds: {
+        Row: {
+          created_at: string
+          end_price: number | null
+          end_ts: string
+          id: string
+          outcome: string | null
+          round_number: number
+          settle_tx_hash: string | null
+          start_price: number
+          start_ts: string
+          status: string
+          symbol: string
+        }
+        Insert: {
+          created_at?: string
+          end_price?: number | null
+          end_ts: string
+          id?: string
+          outcome?: string | null
+          round_number: number
+          settle_tx_hash?: string | null
+          start_price: number
+          start_ts: string
+          status?: string
+          symbol: string
+        }
+        Update: {
+          created_at?: string
+          end_price?: number | null
+          end_ts?: string
+          id?: string
+          outcome?: string | null
+          round_number?: number
+          settle_tx_hash?: string | null
+          start_price?: number
+          start_ts?: string
+          status?: string
+          symbol?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rounds_symbol_fkey"
+            columns: ["symbol"]
+            isOneToOne: false
+            referencedRelation: "markets"
+            referencedColumns: ["symbol"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
